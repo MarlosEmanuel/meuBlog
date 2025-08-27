@@ -1,4 +1,5 @@
 require('dotenv').config();
+const cookieParser = require('cookie-parser');
 const cors = require('cors');
 const express = require('express');
 const connectDB = require('./src/config/db');
@@ -6,6 +7,7 @@ const index = require('./src/routers/indexRouters');
 const app = express();
 const port = 8080;
 
+app.use(cookieParser());
 app.use(express.json());
 connectDB();
 
