@@ -17,6 +17,14 @@ class PostRepository {
             throw new Error(`Erro ao buscar posts: ${err.message}`);
         }
     }
+
+    async deleteById(postId){
+        try{
+            return await Post.findByIdAndDelete(postId);
+        }catch(err){
+            throw new Error(`Erro ao deletar post: ${err.message}`);
+        }
+    }
 }
 
 module.exports = new PostRepository();

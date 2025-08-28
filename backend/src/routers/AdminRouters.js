@@ -10,5 +10,13 @@ router.post('/login',AdminController.login);
 
 //Posts
 router.post('/posts',authMiddleware, upload,PostController.create);
+router.delete('/posts/:id', authMiddleware, PostController.deleteById);
+router.get('/check-auth', authMiddleware, (req, res) => {
+    res.status(200).json({ message: 'Usuário autenticado.' });
+});
+router.post('/logout', authMiddleware,(req,res)=>{
+    res.clearCookie('tokenDeSessao');
+    res.status(200).json({ message: 'Logout bem-sucedido.' });
+});
 
 module.exports = router;

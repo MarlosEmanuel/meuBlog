@@ -32,6 +32,36 @@ class PostController{
             res.status(500).json({ error: error.message });
         }
     }
+
+    async deleteById(req, res) {
+        try {
+            const { id } = req.params;
+            
+            if(!req.params){
+                return res.status(400).json({ error: 'ID do post não fornecido.' });
+            }
+            const deletedPost = await PostRepository.deleteById(id);
+            if (!deletedPost) {
+                return res.status(404).json({ error: 'Post não encontrado.' });
+            }
+            res.status(200).json({ message: 'Post deletado com sucesso.' });
+        } catch (error) {
+            res.status(500).json({ error: error.message });
+        }
+    }
+
+    async deleteById(req, res) {
+        try {
+            const { id } = req.params;
+            const deletedPost = await PostRepository.deleteById(id);
+            if (!deletedPost) {
+                return res.status(404).json({ error: 'Post não encontrado.' });
+            }
+            res.status(200).json({ message: 'Post deletado com sucesso.' });
+        } catch (error) {
+            res.status(500).json({ error: error.message });
+        }
+    }
 }
 
 module.exports = new PostController();
