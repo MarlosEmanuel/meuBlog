@@ -1,10 +1,23 @@
 const PostRepository = require('../repository/PostRepository');
-
+const path = require('path');
 
 class PostController{
     async create(req, res) {
         try {
-            const post = await PostRepository.create(req.body);
+            if (!req.file) {
+                return res.status(400).json({ error: 'Nenhum arquivo de imagem enviado.' });
+            }
+            const { titulo, conteudo } = req.body;
+            const fullPath = req.file.path; 
+            const imgPath = path.normalize(fullPath).replace('public/', '');
+
+            const novoPost = {
+                titulo,
+                conteudo,
+                img: imgPath
+            };
+
+            const post = await PostRepository.create(novoPost);
             res.status(201).json(post);
         } catch (error) {
             res.status(500).json({ error: error.message });
